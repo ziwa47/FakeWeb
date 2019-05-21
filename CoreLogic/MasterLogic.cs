@@ -11,6 +11,7 @@ namespace CoreLogic
 
         public bool HasAuthority(int id, string key)
         {
+            // 檢查權限
             return true;
         }
     }

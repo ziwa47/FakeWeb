@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Web.Mvc;
 using System.Web.Security;
 using CoreLogic;
@@ -22,6 +23,10 @@ namespace FakeWeb.Controllers
 
         LoginInfo _loginInfo;
 
+        /// <summary>
+        /// 取得使用者的資料
+        /// </summary>
+        /// <returns></returns>
         protected Operation GetOperation()
         {
             var result = new Operation
@@ -41,32 +46,39 @@ namespace FakeWeb.Controllers
 
             return result;
         }
-        
+
+        protected Logger GetLogger()
+        {
+            var fullMethodName = default(string);
+
+            try
+            {
+                var method = new StackFrame(1).GetMethod();
+                fullMethodName = $"{method.DeclaringType.FullName}.{method.Name}";
+            }
+            catch (Exception)
+            {
+                fullMethodName = "(unknown)";
+            }
+
+            return LogManager.GetLogger(fullMethodName);
+        }
+
         protected T ReadUserData<T>()
         {
-            if (!Request.IsAuthenticated)
-                throw new UnauthorizedAccessException("尚未登入");
+            if (!Request.IsAuthenticated) throw new UnauthorizedAccessException("no login");
 
             var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
             var userData = FormsAuthentication.Decrypt(authCookie.Value).UserData;
 
             return JsonConvert.DeserializeObject<T>(userData);
         }
-        
+
         protected ActionResult NotAuthorizeJson()
         {
             return JsonError("Not Auth");
         }
 
-        
-        protected ActionResult JsonError(Exception ex)
-        {
-            var logger = LogManager.GetLogger("Exception");
-            logger.Fatal(ex, "");
-
-            return JsonError(ex.GetBaseException().Message);
-        }
-        
         protected ActionResult JsonError(string errorMessage, object returnObject = null)
         {
             return Json(new IsSuccessResult<object>
@@ -76,52 +88,28 @@ namespace FakeWeb.Controllers
                 ReturnObject = returnObject
             }, JsonRequestBehavior.AllowGet);
         }
-        
-        protected bool HasAuthority(string name)
-        {
-            AuthorityKey key;
-            try
-            {
-                key = (AuthorityKey)Enum.Parse(typeof(AuthorityKey), name);
-            }
-            catch (Exception)
-            {
-                GetLogger().Warn($"未经定义的权限代码: [{name}]");
-                return false;
-            }
 
-            return HasAuthority(key);
-        }
-       
-        /// <summary>
-        /// MasterLogic
-        /// </summary>
         private MasterLogic _masterLogic
         {
             get
             {
-                if (@masterLogic == null)
-                    @masterLogic = new MasterLogic(GetOperation());
+                if (@masterLogic == null) @masterLogic = new MasterLogic(GetOperation());
                 return @masterLogic;
             }
         }
 
         private MasterLogic @masterLogic;
-        
+
         protected bool HasAuthority(AuthorityKey key)
         {
             return _masterLogic.HasAuthority(LoginInfo.Id, key.ToString());
         }
-        
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (Request.IsAuthenticated
-                && !Request.Url.ToString().Contains("SignOut"))
+            if (Request.IsAuthenticated)
             {
-                filterContext.Result = new ViewResult
-                {
-                    ViewName = "~/Views/XX.cshtml"
-                };
+                filterContext.Result = NotAuthorizeJson();
             }
 
             base.OnActionExecuting(filterContext);
