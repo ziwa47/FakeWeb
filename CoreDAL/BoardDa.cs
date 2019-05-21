@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using CoreDAL.Dto;
+using CoreDAL.Entity;
 
 namespace CoreDAL
 {
@@ -18,7 +20,7 @@ namespace CoreDAL
 
         public List<SettingDto> GetData(IEnumerable<string> ids)
         {
-            var settings = Context
+            var settings = _context
                            .Settings
                            .Where(r => ids.Contains(r.Id))
                            .ToList()
@@ -27,35 +29,14 @@ namespace CoreDAL
 
             return settings;
         }
-        
+
         private static SettingDto MappingSettingDto(Setting r)
         {
             return new SettingDto
             {
                 Id = r.Id,
-                Name = r.Name,
+                Name = r.Name
             };
         }
-    }
-
-    public class _BaseDA
-    {
-    }
-
-    public class SettingDto
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class DbContext
-    {
-        public List<Setting> Settings { get; set; }
-    }
-
-    public class Setting
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
     }
 }

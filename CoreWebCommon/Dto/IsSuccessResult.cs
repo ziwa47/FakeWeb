@@ -1,10 +1,10 @@
 namespace CoreWebCommon.Dto
 {
     public class IsSuccessResult<T>
+            where T : class
     {
         public IsSuccessResult(string msg)
         {
-            
         }
 
         public IsSuccessResult()
@@ -13,6 +13,6 @@ namespace CoreWebCommon.Dto
 
         public bool IsSuccess { get; set; }
         public string ErrorMessage { get; set; }
-        public object ReturnObject { get; set; }
+        public T ReturnObject { get; set; }
     }
 }
