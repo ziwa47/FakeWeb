@@ -1,8 +1,11 @@
 using System;
 using System.Web.Mvc;
 using System.Web.Security;
+using CoreLogic;
 using CoreWebCommon.Dto;
+using CoreWebCommon.Enum;
 using Newtonsoft.Json;
+using NLog;
 
 namespace FakeWeb.Controllers
 {
@@ -49,7 +52,67 @@ namespace FakeWeb.Controllers
 
             return JsonConvert.DeserializeObject<T>(userData);
         }
+        
+        protected ActionResult NotAuthorizeJson()
+        {
+            return JsonError("Not Auth");
+        }
 
+        
+        protected ActionResult JsonError(Exception ex)
+        {
+            var logger = LogManager.GetLogger("Exception");
+            logger.Fatal(ex, "");
+
+            return JsonError(ex.GetBaseException().Message);
+        }
+        
+        protected ActionResult JsonError(string errorMessage, object returnObject = null)
+        {
+            return Json(new IsSuccessResult<object>
+            {
+                IsSuccess = false,
+                ErrorMessage = errorMessage,
+                ReturnObject = returnObject
+            }, JsonRequestBehavior.AllowGet);
+        }
+        
+        protected bool HasAuthority(string name)
+        {
+            AuthorityKey key;
+            try
+            {
+                key = (AuthorityKey)Enum.Parse(typeof(AuthorityKey), name);
+            }
+            catch (Exception)
+            {
+                GetLogger().Warn($"未经定义的权限代码: [{name}]");
+                return false;
+            }
+
+            return HasAuthority(key);
+        }
+       
+        /// <summary>
+        /// MasterLogic
+        /// </summary>
+        private MasterLogic _masterLogic
+        {
+            get
+            {
+                if (@masterLogic == null)
+                    @masterLogic = new MasterLogic(GetOperation());
+                return @masterLogic;
+            }
+        }
+
+        private MasterLogic @masterLogic;
+        
+        protected bool HasAuthority(AuthorityKey key)
+        {
+            return _masterLogic.HasAuthority(LoginInfo.Id, key.ToString());
+        }
+        
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (Request.IsAuthenticated

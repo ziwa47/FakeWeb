@@ -10,7 +10,7 @@ namespace CoreWebCommon
             return "IP";
         }
 
-        private NLog.Logger GetLogger()
+        protected NLog.Logger GetLogger()
         {
             var method = new StackFrame(1).GetMethod();
             var fullMethodName = $"{method.DeclaringType.FullName}.{method.Name}";

@@ -76,8 +76,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\IsSuccessResult.cs" />
     <Compile Include="Dto\LoginInfo.cs" />
     <Compile Include="Dto\Operation.cs" />
+    <Compile Include="Enum\AuthorityKey.cs" />
     <Compile Include="_BaseController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
