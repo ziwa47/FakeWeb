@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CoreLogic.Dto
+namespace CoreService.Dto
 {
     public class BoardQueryRespObject
     {

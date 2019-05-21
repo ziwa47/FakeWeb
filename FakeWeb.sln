@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLogic", "CoreLogic\Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreDAL", "CoreDAL\CoreDAL.csproj", "{80C6F8E4-1337-437A-82FF-D6ED778FE246}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreService", "CoreService\CoreService.csproj", "{C726443A-9688-4B8A-8098-F5FA9176F3D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{80C6F8E4-1337-437A-82FF-D6ED778FE246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80C6F8E4-1337-437A-82FF-D6ED778FE246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80C6F8E4-1337-437A-82FF-D6ED778FE246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C726443A-9688-4B8A-8098-F5FA9176F3D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C726443A-9688-4B8A-8098-F5FA9176F3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C726443A-9688-4B8A-8098-F5FA9176F3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C726443A-9688-4B8A-8098-F5FA9176F3D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

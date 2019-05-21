@@ -1,6 +1,6 @@
-namespace CoreDAL.Entity
+namespace CoreService.Dto
 {
-    public class Setting
+    public class BoardQueryRespItem
     {
         public string Id { get; set; }
         public string Name { get; set; }

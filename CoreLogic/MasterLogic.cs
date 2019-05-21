@@ -2,9 +2,10 @@ using CoreWebCommon.Dto;
 
 namespace CoreLogic
 {
-    public class MasterLogic
+    public class MasterLogic : _BaseLogic
     {
         public MasterLogic(Operation operation)
+                : base(operation)
         {
         }
 

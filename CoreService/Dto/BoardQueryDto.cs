@@ -1,4 +1,6 @@
-namespace CoreLogic.Dto
+using CoreWebCommon.Dto;
+
+namespace CoreService.Dto
 {
     public class BoardQueryDto
     {

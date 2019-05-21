@@ -7,32 +7,21 @@ namespace CoreDAL
 {
     public class BoardDa : _BaseDA
     {
-        private DbContext _context;
-
-        public DbContext Context
+        public List<BoardDto> GetBoardData(IEnumerable<string> ids)
         {
-            get
-            {
-                if (_context == null) _context = new DbContext();
-                return _context;
-            }
-        }
-
-        public List<SettingDto> GetData(IEnumerable<string> ids)
-        {
-            var settings = _context
-                           .Settings
+            var settings = DBContext
+                           .Boards
                            .Where(r => ids.Contains(r.Id))
                            .ToList()
-                           .Select(MappingSettingDto)
+                           .Select(MappingBoardDto)
                            .ToList();
 
             return settings;
         }
 
-        private static SettingDto MappingSettingDto(Setting r)
+        private static BoardDto MappingBoardDto(Board r)
         {
-            return new SettingDto
+            return new BoardDto
             {
                 Id = r.Id,
                 Name = r.Name

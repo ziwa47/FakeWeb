@@ -1,6 +1,6 @@
-namespace CoreLogic.Dto
+namespace CoreDAL.Entity
 {
-    public class BoardQueryRespItem
+    public class Board
     {
         public string Id { get; set; }
         public string Name { get; set; }

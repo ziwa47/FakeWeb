@@ -1,4 +1,4 @@
-namespace CoreLogic.Dto
+namespace CoreWebCommon.Dto
 {
     public class SearchParamDto
     {

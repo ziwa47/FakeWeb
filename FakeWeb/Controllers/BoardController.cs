@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using CoreLogic;
-using CoreLogic.Dto;
+using CoreWebCommon.Dto;
 using CoreWebCommon.Enum;
 
 namespace FakeWeb.Controllers

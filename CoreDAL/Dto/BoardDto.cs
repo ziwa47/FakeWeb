@@ -1,6 +1,6 @@
 namespace CoreDAL.Dto
 {
-    public class SettingDto
+    public class BoardDto
     {
         public string Id { get; set; }
         public string Name { get; set; }

@@ -5,6 +5,6 @@ namespace CoreDAL
 {
     public class DbContext
     {
-        public List<Setting> Settings { get; set; }
+        public List<Board> Boards { get; set; }
     }
 }

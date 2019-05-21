@@ -1,4 +1,4 @@
-namespace CoreLogic.Dto
+namespace CoreService.Dto
 {
     public class BoardQueryResp
     {

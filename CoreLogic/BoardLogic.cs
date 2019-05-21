@@ -2,7 +2,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoreDAL;
 using CoreLogic.Dto;
-using CoreLogic.Service;
+using CoreService;
+using CoreService.Dto;
 using CoreWebCommon.Dto;
 
 namespace CoreLogic
@@ -10,6 +11,7 @@ namespace CoreLogic
     public class BoardLogic : _BaseLogic
     {
         private readonly BoardDa _boardDa;
+        private ApiService ApiService => new ApiService(GetLogger());
 
         public BoardLogic(Operation operation, BoardDa da = null)
                 : base(operation)
@@ -33,7 +35,7 @@ namespace CoreLogic
             var result = resp.ReturnObject;
 
             // 使用 http 的資料 從 DB 取得資料
-            var settings = _boardDa.GetData(result.Items.Select(r => r.Id));
+            var settings = _boardDa.GetBoardData(result.Items.Select(r => r.Id));
 
             var boardListDto = new BoardListDto
             {
