@@ -30,12 +30,10 @@ namespace CoreLogic
             // Http 呼叫 Service 取得資料
             var resp = await ApiService.PostApi<BoardQueryDto, BoardQueryResp>(queryDto);
 
-            if (!resp.IsSuccess || resp.ReturnObject == null) return new IsSuccessResult<BoardListDto>("Error");
-
-            var result = resp.ReturnObject;
+            if (!resp.IsSuccess || resp.Items == null) return new IsSuccessResult<BoardListDto>("Error");
 
             // 使用 http 的資料 從 DB 取得資料
-            var settings = _boardDa.GetBoardData(result.Items.Select(r => r.Id));
+            var settings = _boardDa.GetBoardData(resp.Items.Select(r => r.Id));
 
             var boardListDto = new BoardListDto
             {

@@ -52,7 +52,6 @@
     <Compile Include="Dto\BoardQueryDto.cs" />
     <Compile Include="Dto\BoardQueryResp.cs" />
     <Compile Include="Dto\BoardQueryRespItem.cs" />
-    <Compile Include="Dto\BoardQueryRespObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
