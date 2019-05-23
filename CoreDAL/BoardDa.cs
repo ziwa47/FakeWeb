@@ -2,11 +2,19 @@ using System.Collections.Generic;
 using System.Linq;
 using CoreDAL.Dto;
 using CoreDAL.Entity;
+using CoreWebCommon.Dto;
 
 namespace CoreDAL
 {
     public class BoardDa : _BaseDA
     {
+        private readonly Operation _operation;
+
+        public BoardDa(Operation operation)
+        {
+            _operation = operation;
+        }
+
         public List<BoardDto> GetBoardData(IEnumerable<string> ids)
         {
             var settings = DBContext
@@ -17,6 +25,15 @@ namespace CoreDAL
                            .ToList();
 
             return settings;
+        }
+
+        /// <summary>
+        /// Action Log
+        /// </summary>
+        /// <param name="methodName"></param>
+        public bool ActionLog(string methodName)
+        {
+            return base.ActionLog(_operation.UserId, _operation.IP, methodName);
         }
 
         private static BoardDto MappingBoardDto(Board r)

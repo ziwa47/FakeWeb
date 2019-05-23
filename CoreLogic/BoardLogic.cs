@@ -16,7 +16,7 @@ namespace CoreLogic
         public BoardLogic(Operation operation, BoardDa da = null)
                 : base(operation)
         {
-            _boardDa = da ?? new BoardDa();
+            _boardDa = da ?? new BoardDa(operation);
         }
 
         public async Task<IsSuccessResult<BoardListDto>> GetBoardList(SearchParamDto search, int pageSize)
@@ -34,6 +34,9 @@ namespace CoreLogic
 
             // 使用 http 的資料 從 DB 取得資料
             var settings = _boardDa.GetBoardData(resp.Items.Select(r => r.Id));
+           
+            // 呼叫 SP 寫 Action Log
+            _boardDa.ActionLog("BoardLogic - GetBoardList");
 
             var boardListDto = new BoardListDto
             {

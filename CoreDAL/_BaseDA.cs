@@ -36,5 +36,11 @@ namespace CoreDAL
         public void Dispose()
         {
         }
+
+        protected bool ActionLog(int userId, string ip, string methodName)
+        {
+            DBContext.SP_ActionLog(userId, ip, methodName);
+            return true;
+        }
     }
 }
