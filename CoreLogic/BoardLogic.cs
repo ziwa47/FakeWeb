@@ -14,7 +14,7 @@ namespace CoreLogic
         private ApiService ApiService => new ApiService(GetLogger());
 
         public BoardLogic(Operation operation, BoardDa da = null)
-                : base(operation)
+            : base(operation)
         {
             _boardDa = da ?? new BoardDa(operation);
         }
@@ -34,17 +34,19 @@ namespace CoreLogic
 
             // 使用 http 的資料 從 DB 取得資料
             var settings = _boardDa.GetBoardData(resp.Items.Select(r => r.Id));
-           
+
             // 呼叫 SP 寫 Action Log
             _boardDa.ActionLog("BoardLogic - GetBoardList");
 
             var boardListDto = new BoardListDto
             {
-                BoardListItems = settings.Select(r => new BoardListItem
-                {
-                    Id = r.Id,
-                    Name = r.Name
-                })
+                BoardListItems = settings
+                                 .Where(s => !s.IsTest)
+                                 .Select(r => new BoardListItem
+                                 {
+                                     Id = r.Id,
+                                     Name = r.Name
+                                 })
             };
 
             return new IsSuccessResult<BoardListDto>

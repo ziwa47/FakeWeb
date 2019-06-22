@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeWeb", "FakeWeb\FakeWeb.csproj", "{F58E2694-6D8C-48CF-86F7-BDED72E28179}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreWebCommon", "CoreWebCommon\CoreWebCommon.csproj", "{711C4519-8882-480B-A38B-8C98E73093B3}"
@@ -9,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreDAL", "CoreDAL\CoreDAL.csproj", "{80C6F8E4-1337-437A-82FF-D6ED778FE246}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreService", "CoreService\CoreService.csproj", "{C726443A-9688-4B8A-8098-F5FA9176F3D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLogicTests", "CoreLogicTests\CoreLogicTests.csproj", "{D32BFE45-E505-4FB3-AD50-335C27ADFEA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +41,15 @@ Global
 		{C726443A-9688-4B8A-8098-F5FA9176F3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C726443A-9688-4B8A-8098-F5FA9176F3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C726443A-9688-4B8A-8098-F5FA9176F3D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D32BFE45-E505-4FB3-AD50-335C27ADFEA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D32BFE45-E505-4FB3-AD50-335C27ADFEA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D32BFE45-E505-4FB3-AD50-335C27ADFEA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D32BFE45-E505-4FB3-AD50-335C27ADFEA3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {152438A9-5440-443D-AB0C-061AD348079A}
 	EndGlobalSection
 EndGlobal
