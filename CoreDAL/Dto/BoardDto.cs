@@ -5,5 +5,6 @@ namespace CoreDAL.Dto
         public string Id { get; set; }
         public string Name { get; set; }
         public bool IsTest { get; set; }
+        public bool IsWarning { get; set; }
     }
 }

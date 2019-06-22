@@ -35,8 +35,8 @@ namespace CoreLogic
             // 使用 http 的資料 從 DB 取得資料
             var settings = _boardDa.GetBoardData(resp.Items.Select(r => r.Id));
 
-            // 呼叫 SP 寫 Action Log
-            _boardDa.ActionLog("BoardLogic - GetBoardList");
+            GetLogger().Info(
+                string.Join(",", settings.Where(s => s.IsWarning).Select(s => s.Name).ToArray()));
 
             var boardListDto = new BoardListDto
             {
