@@ -6,7 +6,20 @@ using CoreWebCommon.Dto;
 
 namespace CoreDAL
 {
-    public class BoardDa : _BaseDA
+    public interface IBoardDa
+    {
+        List<BoardDto> GetBoardData(IEnumerable<string> ids);
+
+        /// <summary>
+        /// Action Log
+        /// </summary>
+        /// <param name="methodName"></param>
+        bool ActionLog(string methodName);
+
+        void Dispose();
+    }
+
+    public class BoardDa : _BaseDA, IBoardDa
     {
         private readonly Operation _operation;
 

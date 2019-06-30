@@ -6,16 +6,20 @@ using NLog;
 
 namespace CoreLogic
 {
-    public abstract class _BaseLogic : IDisposable
+    public interface IMyLogger
     {
-        private readonly Operation _operation;
+        void Info(string message);
+    }
 
-        protected _BaseLogic(Operation operation)
+    public class NLogAdapter : IMyLogger
+    {
+        private readonly Logger _logger;
+        public NLogAdapter()
         {
-            _operation = operation;
+            _logger = GetNLogLogger();
         }
 
-        protected Logger GetLogger()
+        private Logger GetNLogLogger()
         {
             var fullMethodName = default(string);
 
@@ -31,7 +35,27 @@ namespace CoreLogic
 
             return LogManager.GetLogger(fullMethodName);
         }
-        
+
+        public void Info(string message)
+        {
+            _logger.Info(message);
+        }
+    }
+
+    public abstract class _BaseLogic : IDisposable
+    {
+        private readonly Operation _operation;
+
+        protected _BaseLogic(Operation operation)
+        {
+            _operation = operation;
+        }
+
+        protected IMyLogger GetLogger()
+        {
+            return new NLogAdapter();
+        }
+
         protected OperationInfo GetOperationInfo()
         {
             return new OperationInfo

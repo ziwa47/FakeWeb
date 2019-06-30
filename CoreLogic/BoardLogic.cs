@@ -8,15 +8,26 @@ using CoreWebCommon.Dto;
 
 namespace CoreLogic
 {
+ 
+
+
     public class BoardLogic : _BaseLogic
     {
-        private readonly BoardDa _boardDa;
-        private ApiService ApiService => new ApiService(GetLogger());
+        private readonly IApiService _apiService;
+        private readonly IBoardDa _boardDa;
+        private readonly IMyLogger _logger;
 
-        public BoardLogic(Operation operation, BoardDa da = null)
+        public BoardLogic(Operation operation, IBoardDa da = null)
             : base(operation)
         {
             _boardDa = da ?? new BoardDa(operation);
+        }
+
+        public BoardLogic(Operation operation,IApiService apiService, IBoardDa boardDa,IMyLogger logger) : base(operation)
+        {
+            _apiService = apiService;
+            _boardDa = boardDa;
+            _logger = logger;
         }
 
         public async Task<IsSuccessResult<BoardListDto>> GetBoardList(SearchParamDto search, int pageSize)
@@ -28,7 +39,7 @@ namespace CoreLogic
             };
 
             // Http 呼叫 Service 取得資料
-            var resp = await ApiService.PostApi<BoardQueryDto, BoardQueryResp>(queryDto);
+            var resp = await _apiService.PostApi<BoardQueryDto, BoardQueryResp>(queryDto);
 
             if (!resp.IsSuccess || resp.Items == null)
                 return new IsSuccessResult<BoardListDto>() {ErrorMessage = "Error", IsSuccess = false};
@@ -36,8 +47,7 @@ namespace CoreLogic
             // 使用 http 的資料 從 DB 取得資料
             var settings = _boardDa.GetBoardData(resp.Items.Select(r => r.Id));
 
-            GetLogger().Info(
-                string.Join(",", settings.Where(s => s.IsWarning).Select(s => s.Name).ToArray()));
+            _logger.Info(string.Join(",", settings.Where(s => s.IsWarning).Select(s => s.Name).ToArray()));
 
             var boardListDto = new BoardListDto
             {
